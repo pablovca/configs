@@ -30,7 +30,8 @@ font pango:Hack Bold 12
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
+#i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -95,11 +96,10 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 "1:  "
+set $workspace1 "1: "
 set $workspace2 "2:  "
-set $workspace3 "3:  "
-set $workspace4 "4:  "
-set $workspace5 "5:  "
+set $workspace3 "3:  "
+set $workspace4 "4: "
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -132,7 +132,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+Control+l exec i3lock -i ~/Pictures/death.png -t
+bindsym $mod+Control+l exec i3lock -i ~/Pictures/Gwyn.jpg -t
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -178,9 +178,24 @@ client.urgent $urgent-bg-color $urgent-bg-color $text-color #00ff00
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
+#bar {
+#        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+#
+#	colors {
+#		background $bg-color
+#	    	separator #757575
+#		#                  border             background         text
+#		focused_workspace  $bg-color          $bg-color          $text-color
+#		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+#		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+#	}
+#}
+#
 bar {
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
-
+        #status_command ~/bin/bumblebee-status/bumblebee-status -m cpu memory disk nic caffeine indicator layout datetime -p disk.path=/home/pablo/Data -t solarized-powerline
+        status_command py3status -c ~/.config/i3/i3status.conf
+	position top
+	font pango:Hack Bold 12 
 	colors {
 		background $bg-color
 	    	separator #757575
@@ -191,15 +206,29 @@ bar {
 	}
 }
 
+
 #bindsym $mod+d exec "rofi -show run -lines 3 -separator-style 'solid' -color-window '#ffffff,#f5f5f5' -color-normal '#ffffff,#525d76,#f5f5f5,#5294e2,#ffffff' -color-active '#ffffff,#c2cad0,#f5f5f5,#5294e2,#c2cad0' -color-urgent '#ffffff,#dc322f,#f5f5f5,#5294e2,#dc322f'"
  
 #rofi blor theme
-bindsym $mod+d exec "rofi -show run -lines 6  -width 5 -opacity '100' -padding 100 -fullscreen -separator-style 'solid' -color-window 'argb:ee222222,  #FAC863 ,  #FAC863' -color-normal 'argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34'  -color-active 'argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34' -color-urgent 'argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34'"
+bindsym $mod+d exec "rofi -show run -font 'Hack Regular 14' -lines 6  -width 5 -opacity '100' -padding 100 -fullscreen -separator-style 'solid' -color-window 'argb:ee222222,  #FAC863 ,  #FAC863' -color-normal 'argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34'  -color-active 'argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34' -color-urgent 'argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34'"
 
-exec_always setxkbmap -layout es
-exec_always feh --bg-fill ~/Pictures/dissection.jpg
+exec "xrandr --output DP-1 --off --output DVI-D-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal" 
+exec_always setxkbmap -layout us
+exec_always feh --bg-tile ~/Pictures/Gwyn.jpg
+
 exec_always compton
-bindsym $mod+m exec "brightness --inc 10"
-bindsym $mod+n exec "brightness --dec 10"
-bindsym $mod+q exec "amixer -D pulse sset Master 5%+"
-bindsym $mod+z exec "amixer -D pulse sset Master 5%-"
+#bindsym $mod+m exec "brightness --inc 10"
+#bindsym $mod+n exec "brightness --dec 10"
+#bindsym XF86AudioPlay exec "playerctl play-pause"
+#bindsym XF86AudioNext exec "playerctl next"
+#bindsym XF86AudioPrev exec "playerctl previous"
+#bindsym XF86AudioStop exec "playerctl stop"
+bindsym XF86AudioPlay exec "mocp -G"
+bindsym XF86AudioNext exec "mocp -f"
+bindsym XF86AudioPrev exec "mocp -r"
+bindsym XF86AudioStop exec "mocp -s"
+
+
+bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume 1 +5% && killall -s USR1 py3status"
+bindsym XF86AudioLowerVolume exec "pactl set-sink-volume 1 -5% && killall -s USR1 py3status"
+bindsym XF86AudioMute exec "pactl set-sink-mute 1 toggle"
