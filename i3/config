@@ -192,7 +192,7 @@ client.urgent $urgent-bg-color $urgent-bg-color $text-color #00ff00
 #}
 #
 bar {
-        status_command ~/bin/bumblebee-status/bumblebee-status -m cpu memory disk nic indicator layout pasink datetime -p disk.path=/home/pablo/Data layout.wheel-up="setxkbmap -layout us" layout.wheel-down="setxkbmap -layout es" -t gruvbox-powerline
+	status_command ~/bin/bumblebee-status/bumblebee-status -m cpu memory disk nic indicator layout pasink datetime -p disk.path=/home/pablo/Data -t gruvbox-powerline
         #status_command py3status -c ~/.config/i3/i3status.conf
 	position top
 	font pango:Hack Bold 12 
@@ -218,12 +218,12 @@ bar {
 bindsym $mod+d exec "rofi -show run -font 'Hack Regular 14' -lines 6  -width 5 -opacity '100' -padding 100 -fullscreen -separator-style 'solid' -color-window 'argb:ee222222,  #FAC863 ,  #FAC863' -color-normal 'argb:00000000,  #D8DEE9 , argb:00000000,  #FAC863 ,  #1B2B34'  -color-active 'argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34' -color-urgent 'argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34'"
 
 exec "xrandr --output DP-1 --off --output DVI-D-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal" 
-exec_always setxkbmap -layout us
+exec_always setxkbmap -layout "us,es"
 exec_always feh --bg-tile ~/Pictures/Gwyn.jpg
 
 exec_always compton
 exec_always xset s off -dpms
-exec_always clipit
+exec clipit
 #bindsym $mod+m exec "brightness --inc 10"
 #bindsym $mod+n exec "brightness --dec 10"
 #bindsym XF86AudioPlay exec "playerctl play-pause"
